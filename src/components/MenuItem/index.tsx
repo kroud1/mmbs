@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box, Menu, MenuItem, Typography } from "@mui/material";
 
 interface Props {
   title: string;
@@ -10,32 +10,54 @@ interface Props {
 
 function MenuComponent({ title, subTitles }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
-  const open = Boolean(anchorEl);
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const isOpen = Boolean(anchorEl);
+
+  // 텍스트를 클릭했을 때 메뉴를 표시하기 위한 핸들러
+  const handleMenuOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = () => {
+  // 메뉴를 닫기 위한 핸들러
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const menuItemHandler = (url: string) => {
-    setAnchorEl(null);
-    navigator(url);
+  // 메뉴 항목을 클릭했을 때 액션 핸들러
+  const handleMenuItemClick = (url: string) => {
+    handleMenuClose();
+    navigate(url);
   };
 
   return (
-    <Box>
+    <Box component="span" sx={{ flexGrow: 1 }}>
       <Typography
         textAlign={"center"}
         variant="subtitle1"
         fontSize={20}
-        onClick={handleClick}
+        onClick={handleMenuOpen}
       >
         {title}
       </Typography>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={isOpen}
+        onClose={handleMenuClose}
+        MenuListProps={{ "aria-labelledby": "basic-button" }}
+        sx={{ pt: 1.5, pb: 1.5, mt: 2 }}
+      >
+        {subTitles.map((sub) => (
+          <MenuItem
+            key={sub.url}
+            sx={{ minWidth: "10vw", pt: 1.5, pb: 1.5 }}
+            onClick={() => handleMenuItemClick(sub.url)}
+          >
+            {sub.subTitle}
+          </MenuItem>
+        ))}
+      </Menu>
     </Box>
   );
 }

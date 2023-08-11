@@ -1,4 +1,4 @@
-export const CATEGORY_LIST = [
+export const CATEGORY_LIST = [ // 배열 타입
   {
     title: "국내 도서",
     url: "/bookList/국내도서/0",

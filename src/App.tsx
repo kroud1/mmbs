@@ -4,6 +4,7 @@ import mockAxios from "./apis/mockAxios";
 
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
+import Navigation from "./layouts/Navigation";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
   return (
   <>
    <Header />
+   <Navigation/>
    <Footer />
   </>
   );
